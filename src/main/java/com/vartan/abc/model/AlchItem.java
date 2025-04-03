@@ -26,7 +26,7 @@ public class AlchItem {
     private static BufferedImage createAlchImage(BufferedImage bufferedImage, int geLimit) {
         Font smallFont = FontManager.getRunescapeSmallFont();
         Graphics2D imageIconGraphics = bufferedImage.createGraphics();
-        String geLimitString = IntegerUtil.toShorthand(geLimit);
+        String geLimitString = (geLimit == 0) ? "∞" : IntegerUtil.toShorthand(geLimit);
         imageIconGraphics.setFont(smallFont);
         imageIconGraphics.setColor(Color.BLACK);
         imageIconGraphics.drawString(geLimitString, 6, 11);
