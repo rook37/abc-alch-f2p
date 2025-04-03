@@ -140,13 +140,15 @@ public class AbcAlchPanel extends PluginPanel {
             return;
         }
         alchList.removeAll();
+        boolean membersFilter = this.freeToPlay.isSelected();
         for (AlchItem item : plugin.getAlchItems()) {
             int geLimit = item.getGeLimit();
             int minimumTradeLimit = readNumericTextField(this.minimumTradeLimitField);
             int maxPrice = readNumericTextField(this.maxPriceField);
             boolean filterGeLimit = geLimit != 0 && minimumTradeLimit != 0 && geLimit < minimumTradeLimit;
             boolean filterPrice = maxPrice != 0 && item.getGePrice() >= maxPrice;
-            if (filterGeLimit || filterPrice) {
+            boolean isMembers = item.isMembers();
+            if (filterGeLimit || filterPrice || (membersFilter && isMembers)) {
                 continue;
             }
             if (item.getHighAlchProfit() <= 0) {
