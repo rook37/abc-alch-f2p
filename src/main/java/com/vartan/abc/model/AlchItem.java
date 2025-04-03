@@ -13,20 +13,22 @@ public class AlchItem {
     private final BufferedImage image;
     private final int highAlchPrice;
     private final int highAlchProfit;
+    private final boolean isMembers;
 
-    public AlchItem(String name, int gePrice, int highAlchPrice, int highAlchProfit, int geLimit, BufferedImage image) {
+    public AlchItem(String name, int gePrice, int highAlchPrice, int highAlchProfit, int geLimit, BufferedImage image, boolean isMembers) {
         this.name = name;
         this.gePrice = gePrice;
         this.highAlchPrice = highAlchPrice;
         this.highAlchProfit = highAlchProfit;
         this.geLimit = geLimit;
         this.image = createAlchImage(image, geLimit);
+        this.isMembers = isMembers;
     }
 
     private static BufferedImage createAlchImage(BufferedImage bufferedImage, int geLimit) {
         Font smallFont = FontManager.getRunescapeSmallFont();
         Graphics2D imageIconGraphics = bufferedImage.createGraphics();
-        String geLimitString = IntegerUtil.toShorthand(geLimit);
+        String geLimitString = (geLimit == 0) ? "∞" : IntegerUtil.toShorthand(geLimit);
         imageIconGraphics.setFont(smallFont);
         imageIconGraphics.setColor(Color.BLACK);
         imageIconGraphics.drawString(geLimitString, 6, 11);
@@ -59,4 +61,6 @@ public class AlchItem {
     public BufferedImage getImage() {
         return image;
     }
+
+    public boolean isMembers() { return isMembers; }
 }
