@@ -26,6 +26,7 @@ public class AbcAlchPanel extends PluginPanel {
     JTextField minimumTradeLimitField;
     JTextField maxPriceField;
     JComboBox priceSourceBox;
+    JCheckBox freeToPlay;
     AbcAlchPlugin plugin;
     JPanel alchList;
     JButton searchButton;
@@ -56,6 +57,13 @@ public class AbcAlchPanel extends PluginPanel {
             }
         };
 
+        ActionListener executeSearch = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    plugin.readyForPriceUpdate = true;
+                }
+        };
+
         setBorder(new EmptyBorder(6, 6, 6, 6));
         setBackground(ColorScheme.DARK_GRAY_COLOR);
         setLayout(new BorderLayout());
@@ -76,6 +84,11 @@ public class AbcAlchPanel extends PluginPanel {
         layoutPanel.add(minimumTradeLimitRow);
         minimumTradeLimitField.getDocument().addDocumentListener(onInputChanged);
 
+        freeToPlay = new JCheckBox();
+        JPanel freeToPlayRow = createLabeledRow("Free-to-play only:",freeToPlay);
+        layoutPanel.add(freeToPlayRow);
+        freeToPlay.addActionListener(executeSearch);
+
         priceSourceBox = new JComboBox(PRICE_SOURCE_OPTIONS);
         priceSourceBox.setSelectedIndex(0);
         priceSourceBox.addActionListener(new ActionListener() {
@@ -87,12 +100,7 @@ public class AbcAlchPanel extends PluginPanel {
         });
         layoutPanel.add(createLabeledRow("Price Source:", priceSourceBox));
 
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                plugin.readyForPriceUpdate = true;
-            }
-        });
+        searchButton.addActionListener(executeSearch);
         layoutPanel.add(searchButton);
 
         alchList = new JPanel();
